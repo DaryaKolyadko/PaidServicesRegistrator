@@ -20,7 +20,7 @@ namespace PaidServicesRegistrator
         [WebMethod]
         public string HelloWorld()
         {
-            return "Привет всем!";
+            return "Привет Даша!";
         }
     }
 }
