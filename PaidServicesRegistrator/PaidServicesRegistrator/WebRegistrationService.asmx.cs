@@ -22,5 +22,7 @@ namespace PaidServicesRegistrator
         {
             return "Привет Даша!";
         }
+
+        
     }
 }
