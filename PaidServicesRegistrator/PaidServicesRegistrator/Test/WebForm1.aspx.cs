@@ -16,7 +16,7 @@ namespace PaidServicesRegistrator.Test
         {
             if (!IsPostBack)
             {
-                MySqlConnector mysqlConnector = new MySqlConnector("root", "318114275");
+                MySqlConnector mysqlConnector = new MySqlConnector("root", "darya");
                 MySqlConnection connection = mysqlConnector.GetConnection();
 
                 string cmd = "SELECT * FROM service;";
