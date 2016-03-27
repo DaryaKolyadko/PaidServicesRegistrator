@@ -16,11 +16,18 @@ namespace PaidServicesRegistrator.View
         {
             if (firstStart)
             {
-                TokenTypeDropDownList.DataSource = new[] {TokenUtil.TokenType.OneOff, TokenUtil.TokenType.ThirtyDays}; //Enum.GetNames(typeof (TokenUtil.TokenType));
+                TokenTypeDropDownList.DataSource = new[] { TokenUtil.TokenType.OneOff, TokenUtil.TokenType.ThirtyDays };
+                //Enum.GetNames(typeof (TokenUtil.TokenType));
                 TokenTypeDropDownList.DataBind();
                 //TODO get services names from database
                 firstStart = false;
             }
+        }
+
+        protected void OnGetTokenButtonClick(object sender, EventArgs e)
+        {
+            //TODO push to database
+            throw new NotImplementedException();
         }
     }
 }

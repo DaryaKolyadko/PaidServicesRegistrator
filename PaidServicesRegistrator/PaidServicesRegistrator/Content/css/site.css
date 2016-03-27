@@ -37,14 +37,8 @@
     min-height: 28px !important;
 }
 
-.form-control {
-    margin-top: 15px !important;
-}
-
 .control-label {
-    margin-left: 25px !important;
-    margin-right: 3px !important;
-    margin-top: 15px !important;
+    text-align: left !important;
 }
 
 .header {
@@ -61,6 +55,7 @@
     padding: 15px;
     margin: 0 auto;
 }
+
 .form-signin .form-signin-heading, .form-signin .checkbox
 {
     margin-bottom: 10px;
@@ -111,22 +106,5 @@
     font-weight: 400;
     display: block;
 }
-.profile-img
-{
-    width: 96px;
-    height: 96px;
-    margin: 0 auto 10px;
-    display: block;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
-}
-.need-help
-{
-    margin-top: 10px;
-}
-.new-account
-{
-    display: block;
-    margin-top: 10px;
-}
+
+
