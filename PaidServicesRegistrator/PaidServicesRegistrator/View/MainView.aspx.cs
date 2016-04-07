@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.SqlServer.Server;
 using PaidServicesRegistrator.Utils;
 
 namespace PaidServicesRegistrator.View
@@ -22,6 +25,10 @@ namespace PaidServicesRegistrator.View
                 //TODO get services names from database
                 firstStart = false;
             }
+
+            // test encryption
+            var encryptedText = AesCryptUtil.Encrypt("some text");
+            var decryptedText = AesCryptUtil.Decrypt(encryptedText);
         }
 
         protected void OnGetTokenButtonClick(object sender, EventArgs e)

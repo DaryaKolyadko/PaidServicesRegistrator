@@ -27,7 +27,7 @@ namespace PaidServicesRegistrator.Test
                 dt.Columns.Add("id_serv");
                 dt.Columns.Add("wsdl");
                 dt.Columns.Add("token");
-                
+
                 while (reader.Read())
                 {
                     DataRow newRow = dt.NewRow();
