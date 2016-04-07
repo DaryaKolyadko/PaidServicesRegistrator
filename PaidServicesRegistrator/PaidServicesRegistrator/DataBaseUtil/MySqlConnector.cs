@@ -31,7 +31,6 @@ namespace PaidServicesRegistrator.DataBaseUtil
             try
             {
                 connection = new MySqlConnection(connectionString);
-                connection.Open();
             }
             catch (MySqlException ex)
             {

@@ -39,7 +39,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MySql.Data, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -58,11 +61,14 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Test\ClubService.wsdl" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +76,7 @@
     <Content Include="Content\css\bootstrap\bootstrap.min.css" />
     <Content Include="Content\css\site.css" />
     <None Include="Resources\money.png" />
+    <Content Include="PaidService\PaidService.asmx" />
     <Content Include="Scripts\bootstrap\bootstrap.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
@@ -80,11 +87,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBaseUtil\MySqlConnector.cs" />
+    <Compile Include="PaidService\PaidService.asmx.cs">
+      <DependentUpon>PaidService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utils\ClientRegister\ClientDAO.cs" />
+    <Compile Include="Utils\ServiceRegister\ServiceDAO.cs" />
+    <Compile Include="Utils\ServiceRegister\WSDLParser.cs" />
     <Compile Include="View\MainView.aspx.cs">
       <DependentUpon>MainView.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

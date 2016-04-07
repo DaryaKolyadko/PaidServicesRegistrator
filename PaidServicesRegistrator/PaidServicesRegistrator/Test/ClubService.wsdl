@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetClubsFromDb">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetClubsFromDbResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetClubsFromDbResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPlayersFromClubById">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="clubId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPlayersFromClubByIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPlayersFromClubByIdResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPlayerById">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="playerId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPlayerByIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPlayerByIdResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatePlayer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="parameters" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="playerId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UpdatePlayerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdatePlayerResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetClubsFromDbSoapIn">
+    <wsdl:part name="parameters" element="tns:GetClubsFromDb" />
+  </wsdl:message>
+  <wsdl:message name="GetClubsFromDbSoapOut">
+    <wsdl:part name="parameters" element="tns:GetClubsFromDbResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPlayersFromClubByIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPlayersFromClubById" />
+  </wsdl:message>
+  <wsdl:message name="GetPlayersFromClubByIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPlayersFromClubByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPlayerByIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPlayerById" />
+  </wsdl:message>
+  <wsdl:message name="GetPlayerByIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPlayerByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePlayerSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdatePlayer" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePlayerSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdatePlayerResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ClubServiceSoap">
+    <wsdl:operation name="GetClubsFromDb">
+      <wsdl:input message="tns:GetClubsFromDbSoapIn" />
+      <wsdl:output message="tns:GetClubsFromDbSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayersFromClubById">
+      <wsdl:input message="tns:GetPlayersFromClubByIdSoapIn" />
+      <wsdl:output message="tns:GetPlayersFromClubByIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayerById">
+      <wsdl:input message="tns:GetPlayerByIdSoapIn" />
+      <wsdl:output message="tns:GetPlayerByIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlayer">
+      <wsdl:input message="tns:UpdatePlayerSoapIn" />
+      <wsdl:output message="tns:UpdatePlayerSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ClubServiceSoap" type="tns:ClubServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetClubsFromDb">
+      <soap:operation soapAction="http://tempuri.org/GetClubsFromDb" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayersFromClubById">
+      <soap:operation soapAction="http://tempuri.org/GetPlayersFromClubById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayerById">
+      <soap:operation soapAction="http://tempuri.org/GetPlayerById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlayer">
+      <soap:operation soapAction="http://tempuri.org/UpdatePlayer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ClubServiceSoap12" type="tns:ClubServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetClubsFromDb">
+      <soap12:operation soapAction="http://tempuri.org/GetClubsFromDb" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayersFromClubById">
+      <soap12:operation soapAction="http://tempuri.org/GetPlayersFromClubById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPlayerById">
+      <soap12:operation soapAction="http://tempuri.org/GetPlayerById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlayer">
+      <soap12:operation soapAction="http://tempuri.org/UpdatePlayer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ClubService">
+    <wsdl:port name="ClubServiceSoap" binding="tns:ClubServiceSoap">
+      <soap:address location="http://localhost:55399/ClubService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ClubServiceSoap12" binding="tns:ClubServiceSoap12">
+      <soap12:address location="http://localhost:55399/ClubService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
