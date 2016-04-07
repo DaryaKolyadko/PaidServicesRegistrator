@@ -9,6 +9,7 @@ namespace PaidServicesRegistrator.Utils
 {
     public class TokenUtil
     {
+        private const int RandomStringLength = 15;
         private const int MarkLength = 3;
 
         public enum TokenType
@@ -51,9 +52,10 @@ namespace PaidServicesRegistrator.Utils
             return new TokenLifeTimeInfo(tokenType, new DateTime(finishDate));
         }
 
-        public static String GenerateUserToken(String login, String webService)
+        public static String GenerateUserToken(String webService)
         {
-            var data = JoinDataBeforeHash(webService, login, DateTime.Now.ToString("F"));
+            string rndString = randomString(RandomStringLength);
+            var data = JoinDataBeforeHash(webService, rndString, DateTime.Now.ToString("F"));
             return HashUtil.GetHashedValue(data);
         }
 
@@ -73,6 +75,19 @@ namespace PaidServicesRegistrator.Utils
         private static String JoinDataBeforeHash(params String[] stringList)
         {
             return String.Join(String.Empty, stringList);
+        }
+
+        private static String randomString(int length)
+        {
+            const int FIRST_SYM = 33; //inclusive
+            const int LAST_SYM = 127; //exclusive
+            String rndString = "";
+            Random rnd = new Random();
+            for (int i = 0; i < length; i++)
+            {
+                rndString += (char)rnd.Next(FIRST_SYM, LAST_SYM);
+            }
+            return rndString;
         }
     }
 }
