@@ -5,9 +5,11 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.UI;
 
 namespace PaidServicesRegistrator.Utils
 {
+    // work only with ASCII symbols
     public class AesCryptUtil
     {
         private static SymmetricAlgorithm aesProvider;
@@ -33,40 +35,19 @@ namespace PaidServicesRegistrator.Utils
             if (encryptor == null)
                 Init();
 
-            var textBytes = Encoding.Unicode.GetBytes(text);
-            //var encryptedBytes = encryptor.TransformFinalBlock(textBytes, 0, textBytes.Length);
-            using (var memoryStream = new MemoryStream())
-            {
-                using (var cryptoSystem = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
-                {
-                    cryptoSystem.Write(textBytes, 0, textBytes.Length);
-                    cryptoSystem.Close();
-                }
-                return Convert.ToBase64String(memoryStream.ToArray());
-            }
+            var textBytes = Encoding.ASCII.GetBytes(text);
+            var encryptedBytes = encryptor.TransformFinalBlock(textBytes, 0, textBytes.Length);
+            return Convert.ToBase64String(encryptedBytes);
         }
 
-        //TODO error when decrypting data fix
         public static String Decrypt(String encryptedText)
         {
             if (decryptor == null)
                 Init();
 
-            var encryptedBytes = Encoding.Unicode.GetBytes(encryptedText);
-           // byte[] textBytes = new byte[encryptedText.Length*2];
-           // decryptor.TransformBlock(encryptedBytes, 0, encryptedBytes.Length, textBytes, 0);
-           
-            //var textBytes = decryptor.TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
-            using (var memoryStream = new MemoryStream())
-            {
-                using (var cryptoSystem = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Write))
-                {
-                    cryptoSystem.Write(encryptedBytes, 0, encryptedBytes.Length);
-                    cryptoSystem.Close();
-                }
-
-                return Encoding.Unicode.GetString(memoryStream.ToArray());
-            }
+            var encryptedBytes = Convert.FromBase64String(encryptedText);
+            var textBytes = decryptor.TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
+            return Encoding.ASCII.GetString(textBytes);
         }
     }
 }
