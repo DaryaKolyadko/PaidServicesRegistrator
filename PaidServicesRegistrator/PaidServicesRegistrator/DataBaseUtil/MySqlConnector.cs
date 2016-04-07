@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using MySql.Data;
@@ -9,21 +10,13 @@ namespace PaidServicesRegistrator.DataBaseUtil
 {
     public class MySqlConnector
     {
-        private string server = "localhost";
-        private string database = "paid_service_register";
-        private string uid = "";
-        private string password = "";
         private string connectionString;
         private MySqlConnection connection;
         
-        public MySqlConnector(string uid, string password)
+        public MySqlConnector()
         {
-            this.uid = uid;
-            this.password = password;
-            this.connectionString = "SERVER=" + server + ";" +
-                "DATABASE=" + database + ";" +
-                "UID=" + uid + ";" +
-                "PASSWORD=" + password + ";";
+            connectionString = ConfigurationManager.ConnectionStrings["MySQLConnectionString"]
+                .ConnectionString;
         }
 
         public MySqlConnection GetConnection()
