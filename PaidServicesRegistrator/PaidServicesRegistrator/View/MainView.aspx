@@ -27,11 +27,11 @@
             <div class="row">
                 <div class="text-center" style="margin-bottom: 20px;">
                     <div class="col-sm-9 col-md-4 col-md-offset-4">
-                        <div class="account-wall" style="padding: 15px; width: 90%;">
-                                                         <asp:Label runat="server" Text="Choose a service to pay for and
-                                a token type. Then generate your token."/>
-                            <br/>
-                            <asp:Label runat="server" Text="REMEMBER IT"/>
+                        <div id="FormDiv" runat="server" class="account-wall" style="padding: 15px; width: 90%;">
+                            <asp:Label runat="server" Text="Choose a service to pay for and
+                                a token type. Then generate your token." />
+                            <br />
+                            <asp:Label runat="server" Text="REMEMBER IT" />
                             <div class="form-group">
                                 <label class="control-label col-sm-5">Service name:</label>
                                 <div class="col-sm-11">
@@ -51,9 +51,13 @@
                                 </div>
                                 <div class="col-sm-11">
                                     <asp:Button CssClass="btn btn-lg btn-warning btn-block" runat="server"
-                                                style="margin-top: 25px" Text="Get token" OnClick="OnGetTokenButtonClick"/>
+                                        Style="margin-top: 25px" Text="Get token" OnClick="OnGetTokenButtonClick" />
                                 </div>
                             </div>
+                        </div>
+                        <div id="TokenDiv" style="width: 93%; margin-top: 15px; display: none" runat="server">
+                            <asp:Label Text="Your token:" runat="server" CssClass="token-text-label"></asp:Label><br />
+                            <asp:Label ID="TokenValueLabel" Text="iviu9y0307y-f4yf0huyg8" runat="server" CssClass="token-text"></asp:Label>
                         </div>
                         <div style="width: 85%;">
                             <asp:Image ImageUrl="~/Resources/money.png" runat="server" Height="50%" Width="50%" />
@@ -63,6 +67,7 @@
             </div>
         </div>
     </form>
+
 
     <%-- footer --%>
     <div id="footerOptions" class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">

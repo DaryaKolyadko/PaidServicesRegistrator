@@ -107,4 +107,14 @@
     display: block;
 }
 
+.token-text-label {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #f39641;
+}
 
+.token-text {
+    text-align: center;
+    font-size: 19px;
+}

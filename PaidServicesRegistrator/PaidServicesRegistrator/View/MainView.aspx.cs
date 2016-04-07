@@ -7,34 +7,51 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.SqlServer.Server;
+using PaidServicesRegistrator.Service;
 using PaidServicesRegistrator.Utils;
+using PaidServicesRegistrator.Utils.ClientRegister;
+using PaidServicesRegistrator.Utils.ServiceRegister;
 
 namespace PaidServicesRegistrator.View
 {
     public partial class MainView : Page
     {
-        private static bool firstStart = true;
+        private static ClientDAO clientDao;
+        private static ServiceDAO serviceDao;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (firstStart)
-            {
-                TokenTypeDropDownList.DataSource = new[] { TokenUtil.TokenType.OneOff, TokenUtil.TokenType.ThirtyDays };
-                //Enum.GetNames(typeof (TokenUtil.TokenType));
-                TokenTypeDropDownList.DataBind();
-                //TODO get services names from database
-                firstStart = false;
-            }
+            clientDao = new ClientDAO();
+            serviceDao = new ServiceDAO();
 
-            // test encryption
-            var encryptedText = AesCryptUtil.Encrypt("some text");
-            var decryptedText = AesCryptUtil.Decrypt(encryptedText);
+            //====testing=====
+            //var p = new PaidService();
+            //var r = p.CheckUserRegistration("Z7jWh7m/XNFUdq6A8GkW4WWeoJhIwymiBSdLNPHdOJU=", "4M5O2rC70dLHOVDCRWKOWWxYsDsLT+8uJt6/Tk0YDb4=");
+
+            if (!Page.IsPostBack)
+            {
+                TokenTypeDropDownList.DataSource = new[]
+                {
+                    TokenUtil.TokenType.OneOff.ToString(),
+                    TokenUtil.TokenType.ThirtyDays.ToString()
+                };
+
+                ServiceNameDropDownList.DataSource = serviceDao.GetServiceNames();
+                TokenTypeDropDownList.DataBind();
+                ServiceNameDropDownList.DataBind();
+            }
         }
 
         protected void OnGetTokenButtonClick(object sender, EventArgs e)
         {
-            //TODO push to database
-            throw new NotImplementedException();
+            TokenUtil.TokenType tokenType;
+
+            if (!Enum.TryParse(TokenTypeDropDownList.SelectedValue, out tokenType)) 
+                return;
+
+            var token = clientDao.RegisterClient(ServiceNameDropDownList.SelectedValue, tokenType);
+            TokenValueLabel.Text = token;
+            TokenDiv.Style["display"] = "block";
         }
     }
 }
