@@ -12,22 +12,15 @@ namespace PaidServicesRegistrator.Utils.ServiceRegister
     public class ServiceDAO
     {
         private MySqlConnector connector;
-        private string uid { get; set; }
-        private string pass { get; set; }
 
         private string ADD_NEW_SERVICE = "INSERT INTO service (wsdl, token, name) VALUES (?wsdl, ?token, ?name)";
         private string GET_ALL_SERVICE_NAMES = "SELECT name FROM service";
         private string GET_NAME_BY_ID = "SELECT name FROM service WHERE id_service = @id";
-
-        public ServiceDAO(string uid, string pass)
-        {
-            this.uid = uid;
-            this.pass = pass;
-        }
-
+        private string GET_ID_BY_NAME = "SELECT id_service FROM service WHERE name = @name";
+        private string GET_ID_BY_TOKEN = "SELECT id_service FROM service WHERE token = @token";
         public string RegisterService(XDocument wsdl)
         {
-            connector = new MySqlConnector(uid, pass);
+            connector = new MySqlConnector();
             string name = WSDLParser.getNameFromWSDL(wsdl);
 
             byte[] blobData;
@@ -43,9 +36,9 @@ namespace PaidServicesRegistrator.Utils.ServiceRegister
             MySqlCommand cmd = connection.CreateCommand();
 
             cmd.CommandText = ADD_NEW_SERVICE;
-            cmd.Parameters.Add("?wsdl", blobData);
-            cmd.Parameters.Add("?token", token);
-            cmd.Parameters.Add("?name", name);
+            cmd.Parameters.AddWithValue("?wsdl", blobData);
+            cmd.Parameters.AddWithValue("?token", AesCryptUtil.Encrypt(token));
+            cmd.Parameters.AddWithValue("?name", name);
 
             connection.Open();
             cmd.ExecuteNonQuery();
@@ -56,7 +49,7 @@ namespace PaidServicesRegistrator.Utils.ServiceRegister
 
         public List<string> GetServiceNames()
         {
-            connector = new MySqlConnector(uid, pass);
+            connector = new MySqlConnector();
             MySqlConnection connection = connector.GetConnection();
             MySqlCommand cmd = connection.CreateCommand();
 
@@ -69,7 +62,7 @@ namespace PaidServicesRegistrator.Utils.ServiceRegister
 
             while (reader.Read())
             {
-                names.Add(reader[0].ToString());
+                names.Add(reader.GetString(0));
             }
 
             connection.Close();
@@ -79,12 +72,12 @@ namespace PaidServicesRegistrator.Utils.ServiceRegister
 
         public string GetNameById(int serviceId)
         {
-            connector = new MySqlConnector(uid, pass);
+            connector = new MySqlConnector();
             MySqlConnection connection = connector.GetConnection();
             MySqlCommand cmd = connection.CreateCommand();
 
             cmd.CommandText = GET_NAME_BY_ID;
-            cmd.Parameters.Add("@id", serviceId);
+            cmd.Parameters.AddWithValue("@id", serviceId);
 
             connection.Open();
             MySqlDataReader reader = cmd.ExecuteReader();
@@ -93,11 +86,69 @@ namespace PaidServicesRegistrator.Utils.ServiceRegister
 
             while (reader.Read())
             {
-                names.Add(reader[0].ToString());
+                names.Add(reader.GetString(0));
             }
 
             connection.Close();
-            return names[0];
+
+            if (names.Count > 0)
+                return names[0];
+
+            return null;
+        }
+
+        public int GetIdByName(string serviceName)
+        {
+            connector = new MySqlConnector();
+            MySqlConnection connection = connector.GetConnection();
+            MySqlCommand cmd = connection.CreateCommand();
+
+            cmd.CommandText = GET_ID_BY_NAME;
+            cmd.Parameters.AddWithValue("@name", serviceName);
+
+            connection.Open();
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            List<int> id = new List<int>();
+
+            while (reader.Read())
+            {
+                id.Add(reader.GetInt32(0));
+            }
+
+            connection.Close();
+
+            if(id.Count > 0)
+                return id[0];
+
+            return -1;
+        }
+
+        public int GetIdByToken(string token)
+        {
+            connector = new MySqlConnector();
+            MySqlConnection connection = connector.GetConnection();
+            MySqlCommand cmd = connection.CreateCommand();
+
+            cmd.CommandText = GET_ID_BY_TOKEN;
+            cmd.Parameters.AddWithValue("@token", AesCryptUtil.Encrypt(token));
+
+            connection.Open();
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            List<int> id = new List<int>();
+
+            while (reader.Read())
+            {
+                id.Add(reader.GetInt32(0));
+            }
+
+            connection.Close();
+
+            if (id.Count > 0)
+                return id[0];
+
+            return -1;
         }
     }
 }

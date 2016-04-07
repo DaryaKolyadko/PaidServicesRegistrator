@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace PaidServicesRegistrator.Utils
     {
         private const int RandomStringLength = 15;
         private const int MarkLength = 3;
+        private static readonly CultureInfo CultureInfo = new CultureInfo("en-US");
 
         public enum TokenType
         {
@@ -34,7 +36,7 @@ namespace PaidServicesRegistrator.Utils
         public static String GenerateUserTokenLifeTimeString(TokenType tokenType)
         {
             var finishDate = DateTime.Now.AddDays((int)tokenType);
-            var finishDateStr = finishDate.Ticks.ToString();
+            var finishDateStr = finishDate.Ticks.ToString(CultureInfo);
             return AppendTokenTypeMark(finishDateStr, tokenType);
         }
 
@@ -55,14 +57,29 @@ namespace PaidServicesRegistrator.Utils
         public static String GenerateUserToken(String webService)
         {
             string rndString = randomString(RandomStringLength);
-            var data = JoinDataBeforeHash(webService, rndString, DateTime.Now.ToString("F"));
+            var data = JoinDataBeforeHash(webService, rndString, DateTime.Now.ToString("F", CultureInfo));
             return HashUtil.GetHashedValue(data);
         }
 
         public static String GenerateServiceToken(String webService)
         {
-            var data = JoinDataBeforeHash(webService, DateTime.Now.ToString("F"));
+            var data = JoinDataBeforeHash(webService, DateTime.Now.ToString("F", CultureInfo));
             return HashUtil.GetHashedValue(data);
+        }
+
+        public static bool IsTokenValid(TokenLifeTimeInfo tokenInfo)
+        {
+            if (tokenInfo.tokenType.Equals(TokenType.OneOff))
+                return true;
+
+            if (tokenInfo.tokenType.Equals(TokenType.ThirtyDays))
+            {
+                if (tokenInfo.finishDate.Date >= DateTime.Now.Date)
+                    return true;
+                return false;
+            }
+           
+            return false;
         }
 
         //===============PRIVATE==============
