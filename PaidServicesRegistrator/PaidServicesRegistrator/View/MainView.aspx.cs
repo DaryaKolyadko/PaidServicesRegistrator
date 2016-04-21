@@ -7,7 +7,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.SqlServer.Server;
-using PaidServicesRegistrator.Service;
 using PaidServicesRegistrator.Utils;
 using PaidServicesRegistrator.Utils.ClientRegister;
 using PaidServicesRegistrator.Utils.ServiceRegister;
@@ -27,7 +26,7 @@ namespace PaidServicesRegistrator.View
 
             //====testing=====
             //var p = new WcfService.PaidServicesRegistrator();//new PaidService();
-            //var r = p.CheckUserRegistration("Z7jWh7m/XNFUdq6A8GkW4WWeoJhIwymiBSdLNPHdOJU=", "SgiJMtPPePH3xND8PEVMDaLR50yeyI+NQa83WtnPhOY=");
+            //var r = p.CheckUserRegistration("Z7jWh7m/XNFUdq6A8GkW4WWeoJhIwymiBSdLNPHdOJU=", "DNrYkl9CLUjUzCPwNcU1QBHCjK6bL3+UzDD8uii8D8M=");
 
             if (!Page.IsPostBack)
             {
