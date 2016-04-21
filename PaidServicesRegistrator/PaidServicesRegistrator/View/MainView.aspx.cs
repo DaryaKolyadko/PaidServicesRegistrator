@@ -11,6 +11,7 @@ using PaidServicesRegistrator.Service;
 using PaidServicesRegistrator.Utils;
 using PaidServicesRegistrator.Utils.ClientRegister;
 using PaidServicesRegistrator.Utils.ServiceRegister;
+using PaidServicesRegistrator.WcfService;
 
 namespace PaidServicesRegistrator.View
 {
@@ -25,8 +26,8 @@ namespace PaidServicesRegistrator.View
             serviceDao = new ServiceDAO();
 
             //====testing=====
-            //var p = new PaidService();
-            //var r = p.CheckUserRegistration("Z7jWh7m/XNFUdq6A8GkW4WWeoJhIwymiBSdLNPHdOJU=", "4M5O2rC70dLHOVDCRWKOWWxYsDsLT+8uJt6/Tk0YDb4=");
+            //var p = new WcfService.PaidServicesRegistrator();//new PaidService();
+            //var r = p.CheckUserRegistration("Z7jWh7m/XNFUdq6A8GkW4WWeoJhIwymiBSdLNPHdOJU=", "SgiJMtPPePH3xND8PEVMDaLR50yeyI+NQa83WtnPhOY=");
 
             if (!Page.IsPostBack)
             {

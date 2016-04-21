@@ -1,26 +1,20 @@
-﻿using PaidServicesRegistrator.Utils;
-using PaidServicesRegistrator.Utils.ClientRegister;
-using PaidServicesRegistrator.Utils.ServiceRegister;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Services;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.Text;
 using System.Xml.Linq;
+using PaidServicesRegistrator.Utils;
+using PaidServicesRegistrator.Utils.ClientRegister;
+using PaidServicesRegistrator.Utils.ServiceRegister;
 
-namespace PaidServicesRegistrator.Service
+namespace PaidServicesRegistrator.WcfService
 {
-    /// <summary>
-    /// Summary description for PaidService
-    /// </summary>
-    [WebService(Namespace = "http://tempuri.org/")]
-    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [System.ComponentModel.ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
-    // [System.Web.Script.Services.ScriptService]
-    public class PaidService : WebService
+    // ПРИМЕЧАНИЕ. Команду "Переименовать" в меню "Рефакторинг" можно использовать для одновременного изменения имени класса "PaidServicesRegistrator" в коде, SVC-файле и файле конфигурации.
+    // ПРИМЕЧАНИЕ. Чтобы запустить клиент проверки WCF для тестирования службы, выберите элементы PaidServicesRegistrator.svc или PaidServicesRegistrator.svc.cs в обозревателе решений и начните отладку.
+    public class PaidServicesRegistrator : IPaidServicesRegistrator
     {
-        [WebMethod]
         public string RegisterService(XDocument wsdl)
         {
             ServiceDAO register = new ServiceDAO();
@@ -29,7 +23,6 @@ namespace PaidServicesRegistrator.Service
             return token;
         }
 
-        [WebMethod]
         public bool CheckUserRegistration(String serviceToken, String userToken)
         {
             ServiceDAO serviceDao = new ServiceDAO();
@@ -62,16 +55,5 @@ namespace PaidServicesRegistrator.Service
 
             return false;
         }
-
-
-        // are we need this method?
-        //[WebMethod]
-        //public string RegisterClient(int serviceId, TokenUtil.TokenType tokenType)
-        //{
-        //    ClientDAO register = new ClientDAO();
-        //    string token = register.RegisterClient(serviceId, tokenType);
-
-        //    return token;
-        //} 
     }
 }

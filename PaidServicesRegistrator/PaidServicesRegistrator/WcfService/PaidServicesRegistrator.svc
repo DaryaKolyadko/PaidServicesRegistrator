@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="PaidServicesRegistrator.WcfService.PaidServicesRegistrator" CodeBehind="PaidServicesRegistrator.svc.cs" %>
